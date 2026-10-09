@@ -107,3 +107,46 @@ def test_aggiunta_metrica():
     assert campagna1.metriche[0] == metrica1
     assert metrica2 in campagna1.metriche
     assert campagna1.metriche[1] == metrica2
+
+
+def test_calcolo_spesa_totale():
+    campagna1 = Campagna("Black Friday 2026", 50000, "Acquisti E-commerce")
+    campagna2 = Campagna("Natale 2026", 70000, "Lead Generation")
+
+    metrica1 = MetricaGiornaliera("2026-11-01", 500, 10)
+    metrica2 = MetricaGiornaliera("2026-11-02", 500, 7)
+    metrica3 = MetricaGiornaliera("2026-11-03", 500, 8)
+
+    campagna1.aggiungi_metrica(metrica1)
+    campagna1.aggiungi_metrica(metrica2)
+    campagna1.aggiungi_metrica(metrica3)
+
+    assert campagna1.calcola_spesa_totale() == 1500
+    assert campagna2.calcola_spesa_totale() == 0  # Senza metriche ritorna 0
+
+
+def test_calcolo_cpa_totale():
+    """Test per verificare che il metodo per il calcolo del cpa totale funzioni correttamente"""
+    campagna1 = Campagna("Black Friday 2026", 50000, "Acquisti E-commerce")
+
+    metrica1 = MetricaGiornaliera("2026-11-01", 500, 10)
+    metrica2 = MetricaGiornaliera("2026-11-02", 500, 7)
+    metrica3 = MetricaGiornaliera("2026-11-03", 500, 8)
+
+    campagna1.aggiungi_metrica(metrica1)
+    campagna1.aggiungi_metrica(metrica2)
+    campagna1.aggiungi_metrica(metrica3)
+
+    assert campagna1.calcola_cpa_totale() == 1500 / 25
+
+    campagna2 = Campagna("Natale 2026", 50000, "Acquisti E-commerce")
+
+    assert campagna2.calcola_cpa_totale() is None  # Nessuna metrica ritorna None
+
+    campagna3 = Campagna("Natale 2026", 50000, "Acquisti E-commerce")
+
+    metrica4 = MetricaGiornaliera("2026-11-08", 500, 0)
+
+    campagna3.aggiungi_metrica(metrica4)
+
+    assert campagna3.calcola_cpa_totale() is None  # Con 0 conversioni ritorna None

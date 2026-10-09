@@ -24,8 +24,27 @@ class Campagna:
             self.metriche = metriche
 
     def aggiungi_metrica(self, metrica):
-        """Aggiunge una nuova metrica alla liste di metriche della campagna"""
+        """Aggiunge una nuova metrica allE liste di metriche della campagna"""
         self.metriche.append(metrica)
+
+    def calcola_spesa_totale(self):
+        spesa_totale = 0
+
+        for metrica in self.metriche:
+            spesa_totale += metrica.spesa
+
+        return spesa_totale
+
+    def calcola_cpa_totale(self):
+        conversioni_totali = 0
+
+        for metrica in self.metriche:
+            conversioni_totali += metrica.conversioni
+
+        if conversioni_totali > 0:
+            return self.calcola_spesa_totale() / conversioni_totali
+        else:
+            return None
 
 
 class MetricaGiornaliera:
