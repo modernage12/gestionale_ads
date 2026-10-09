@@ -28,6 +28,7 @@ class Campagna:
         self.metriche.append(metrica)
 
     def calcola_spesa_totale(self):
+        """Calcola la spesa totale dalle metriche della campagna e ne ritorna quindi la somma"""
         spesa_totale = 0
 
         for metrica in self.metriche:
@@ -36,6 +37,7 @@ class Campagna:
         return spesa_totale
 
     def calcola_cpa_totale(self):
+        """Calcola il cpa totale dalle metriche della campagna e ne ritorna il valore"""
         conversioni_totali = 0
 
         for metrica in self.metriche:
@@ -44,7 +46,7 @@ class Campagna:
         if conversioni_totali > 0:
             return self.calcola_spesa_totale() / conversioni_totali
         else:
-            return None
+            return None  # Deciso che con 0 conversioni/metriche ritorna None
 
 
 class MetricaGiornaliera:
