@@ -12,6 +12,22 @@ class Cliente:
         return f"Cliente: {self.nome} ({len(self.campagne)} campagne)"
 
 
+class Campagna:
+
+    def __init__(self, nome, budget, tipo, metriche=None):
+        self.nome = nome
+        self.budget = budget
+        self.tipo = tipo
+        if metriche is None:
+            self.metriche = []
+        else:
+            self.metriche = metriche
+
+    def aggiungi_metrica(self, metrica):
+        """Aggiunge una nuova metrica alla liste di metriche della campagna"""
+        self.metriche.append(metrica)
+
+
 class MetricaGiornaliera:
 
     def __init__(self, data, spesa, conversioni, ricavi=None, lead=None):
