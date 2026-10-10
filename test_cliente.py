@@ -150,3 +150,40 @@ def test_calcolo_cpa_totale():
     campagna3.aggiungi_metrica(metrica4)
 
     assert campagna3.calcola_cpa_totale() is None  # Con 0 conversioni ritorna None
+
+
+def test_calcolo_roas():
+    """Test per verificare che il metodo calcola_roas_totale funzioni correttamente nei diversi casi"""
+    campagna1 = Campagna("Black Friday 2026", 50000, "Acquisti E-commerce")
+    campagna2 = Campagna("Estate 2026", 50000, "Acquisti E-commerce")
+
+    metrica1 = MetricaGiornaliera("2026-11-01", 500, 10, 6500)
+    metrica2 = MetricaGiornaliera("2026-07-21", 500, 7)
+
+    campagna1.aggiungi_metrica(metrica1)
+    campagna2.aggiungi_metrica(metrica2)
+
+    assert campagna1.calcola_roas_totale() == 6500 / 500
+    assert campagna2.calcola_roas_totale() is None
+
+    metrica3 = MetricaGiornaliera("2026-11-01", 500, 10)
+
+    campagna1.aggiungi_metrica(metrica3)
+
+    assert campagna1.calcola_roas_totale() is None
+
+    campagna3 = Campagna("Estate 2026", 50000, "Acquisti E-commerce")
+
+    metrica4 = MetricaGiornaliera("2026-11-01", 500, 10, 0)
+
+    campagna3.aggiungi_metrica(metrica4)
+
+    assert campagna3.calcola_roas_totale() == 0
+
+    metrica5 = MetricaGiornaliera("2026-11-01", 0, 10, 500)
+
+    campagna4 = Campagna("Estate 2026", 50000, "Acquisti E-commerce")
+
+    campagna4.aggiungi_metrica(metrica5)
+
+    assert campagna4.calcola_roas_totale() is None  # Con spesa 0 deve restituire None

@@ -48,6 +48,22 @@ class Campagna:
         else:
             return None  # Deciso che con 0 conversioni/metriche ritorna None
 
+    def calcola_roas_totale(self):
+        """Calcola il ROAS totale dalle metriche della campagna e ne ritorna il valore"""
+        ricavi_totali = 0
+
+        for metrica in self.metriche:
+            if metrica.ricavi is not None:
+                ricavi_totali += metrica.ricavi
+            else:
+                ricavi_totali = None  # Voglio che se anche solo un giorno ha ricavi = None, il resto non sia valido
+                break
+
+        if ricavi_totali is not None and self.calcola_spesa_totale() > 0:
+            return ricavi_totali / self.calcola_spesa_totale()
+        else:
+            return None
+
 
 class MetricaGiornaliera:
 
