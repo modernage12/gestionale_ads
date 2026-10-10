@@ -64,6 +64,26 @@ class Campagna:
         else:
             return None
 
+    def calcola_cpl_totale(self):
+        """Calcola il CPL totale dalle metriche della campagna e ne ritorna il valore"""
+        lead_totali = 0
+        spesa_totale = self.calcola_spesa_totale()
+
+        for metrica in self.metriche:
+            if metrica.lead is not None:
+                lead_totali += metrica.lead
+            else:
+                lead_totali = None
+                break
+
+        if lead_totali is not None and lead_totali > 0:
+            if spesa_totale > 0:
+                return spesa_totale / lead_totali
+            else:
+                return spesa_totale  # Se spesa = 0 ma ci sono lead, il CPL sarà considerato 0 quindi come costo
+        else:
+            return None
+
 
 class MetricaGiornaliera:
 

@@ -187,3 +187,34 @@ def test_calcolo_roas():
     campagna4.aggiungi_metrica(metrica5)
 
     assert campagna4.calcola_roas_totale() is None  # Con spesa 0 deve restituire None
+
+
+def test_calcolo_cpl():
+    """Test di verifica per metodo di calcolo CPL totale e del suo corretto funzionamento"""
+    campagna1 = Campagna("Black Friday 2026", 50000, "Acquisti E-commerce")
+    campagna2 = Campagna("Estate 2026", 50000, "Acquisti E-commerce")
+    campagna3 = Campagna("Estate 2026", 50000, "Acquisti E-commerce")
+
+    metrica1 = MetricaGiornaliera("2026-11-01", 500, 10, 6500, lead=20)
+    metrica2 = MetricaGiornaliera("2026-07-21", 500, 7)
+    metrica3 = MetricaGiornaliera("2026-11-01", 0, 10, lead=40)
+
+    campagna1.aggiungi_metrica(metrica1)
+    campagna2.aggiungi_metrica(metrica2)
+    campagna3.aggiungi_metrica(metrica3)
+
+    assert campagna1.calcola_cpl_totale() == 500 / 20
+    assert campagna2.calcola_cpl_totale() is None
+    assert campagna3.calcola_cpl_totale() == 0  # Con spesa 0 deve ritornare 0
+
+    campagna1.aggiungi_metrica(metrica2)
+
+    assert campagna1.calcola_cpl_totale() is None  # Con l'aggiunta di una giornata con lead None deve ritornare None
+
+    metrica4 = MetricaGiornaliera("2026-11-01", 200, 10, lead=0)
+
+    campagna4 = Campagna("Estate 2026", 50000, "Acquisti E-commerce")
+
+    campagna4.aggiungi_metrica(metrica4)
+
+    assert campagna4.calcola_cpl_totale() is None # Con lead 0 deve ritornare None
