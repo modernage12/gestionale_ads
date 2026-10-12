@@ -5,5 +5,4 @@ __pycache__/
 /SPECIFICHE.md
 /test_persistenza_json.json
 /prova.json
-/metriche_esempio.csv
-/metriche_non_valide.csv
+*.csv
