@@ -11,6 +11,9 @@ class Cliente:
         """Serve per formattare il valore ritornato quando viene richiamato l'oggetto come stringa"""
         return f"Cliente: {self.nome} ({len(self.campagne)} campagne)"
 
+    def aggiungi_campagna(self, campagna):
+        self.campagne.append(campagna)
+
 
 class Campagna:
 
