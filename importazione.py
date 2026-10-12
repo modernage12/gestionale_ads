@@ -9,20 +9,23 @@ def importa_metriche(percorso_file_csv):
 
         lista_metriche = []
 
-        for metrica in metriche_csv:
-            if metrica["ricavi"] != "":
-                ricavi = float(metrica["ricavi"])
-            else:
-                ricavi = None
+        for posizione, metrica in enumerate(metriche_csv, start=2):  # start = 2 perchè riga 1 sono i titoli
+            try:
+                if metrica["ricavi"].strip() != "":
+                    ricavi = float(metrica["ricavi"])
+                else:
+                    ricavi = None
 
-            if metrica["lead"] != "":
-                lead = int(metrica["lead"])
-            else:
-                lead = None
+                if metrica["lead"].strip() != "":
+                    lead = int(metrica["lead"])
+                else:
+                    lead = None
 
-            # passo un oggetto MetricaGiornaliera invece che una lista per facilitare l'accesso
-            lista_metriche.append(
-                MetricaGiornaliera(metrica["data"], float(metrica["spesa"]), int(metrica["conversioni"]),
-                                   ricavi, lead))
+                # passo un oggetto MetricaGiornaliera invece che una lista per facilitare l'accesso
+                lista_metriche.append(
+                    MetricaGiornaliera(metrica["data"], float(metrica["spesa"]), int(metrica["conversioni"]),
+                                       ricavi, lead))
+            except ValueError:
+                raise ValueError(f"Errore alla riga {posizione}: valore numerico non valido")
 
     return lista_metriche
