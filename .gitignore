@@ -6,3 +6,4 @@ __pycache__/
 /test_persistenza_json.json
 /prova.json
 *.csv
+/report_campagne.txt
