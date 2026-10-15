@@ -7,3 +7,7 @@ __pycache__/
 /prova.json
 *.csv
 /report_campagne.txt
+/dati_clienti.json
+/report.txt
+!/metriche_non_valide.csv
+!/metriche_esempio.csv
